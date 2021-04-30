@@ -41,6 +41,8 @@ async def on_message(message):
             r.set(str(message.channel), 1)
             r.set(str(message.channel)+"garr", pickle.dumps(garray))
             await message.reply("$game start")
+    if((r.get(str(message.channel))).decode('utf-8') == 1):
+        await message.reply("game is active for this channel")
 
 
 def render(garray):
