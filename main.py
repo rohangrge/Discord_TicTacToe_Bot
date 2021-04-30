@@ -44,7 +44,6 @@ async def on_message(message):
     if((r.get(str(message.channel))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
             p = imsg.split()
-            test = 1
 
 
 def render(garray):
