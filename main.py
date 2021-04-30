@@ -2,7 +2,6 @@ import discord
 from discord import channel
 from discord import client
 from dotenv.main import load_dotenv
-from redis.connection import msg
 from keep_alive import keep_alive
 import os
 from PIL import Image
