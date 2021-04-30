@@ -33,7 +33,7 @@ async def on_message(message):
         return
 
     imsg = message.content
-    if((r.get(str(message.channel))).decode("utf-8") != 1):
+    if((r.get(str(message.channel))) is None):
         if(imsg.startswith("$tichelp")):
             async with message.channel.typing():
                 await message.channel.send("$startgame to tictactoe")
