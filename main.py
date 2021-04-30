@@ -39,8 +39,8 @@ async def on_message(message):
         async with message.channel.typing():
             await message.channel.send("$startgame to tictactoe")
     if(imsg.startswith("$tictactoe")):
-        r.set(str(msg.channel): 1)
-        await message.channel.send("$game start")
+        r.set(str(message.channel), 1)
+        await message.reply("$game start")
 
 
 def render(garray):
