@@ -2,6 +2,7 @@ import discord
 from discord import channel
 from discord import client
 from dotenv.main import load_dotenv
+from redis.connection import msg
 from keep_alive import keep_alive
 import os
 from PIL import Image
@@ -38,6 +39,7 @@ async def on_message(message):
         async with message.channel.typing():
             await message.channel.send("$startgame to tictactoe")
     if(imsg.startswith("$tictactoe")):
+        r.set(str(msg.channel): 1)
         await message.channel.send("$game start")
 
 
