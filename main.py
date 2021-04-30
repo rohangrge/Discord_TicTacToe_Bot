@@ -33,13 +33,14 @@ async def on_message(message):
         return
 
     imsg = message.content
-
-    if(imsg.startswith("$tichelp")):
-        async with message.channel.typing():
-            await message.channel.send("$startgame to tictactoe")
-    if(imsg.startswith("$tictactoe")):
-        r.set(str(message.channel), 1)
-        await message.reply("$game start")
+    if((r.get(str(message.channel))).decode("utf-8") != 1):
+        if(imsg.startswith("$tichelp")):
+            async with message.channel.typing():
+                await message.channel.send("$startgame to tictactoe")
+        if(imsg.startswith("$tictactoe")):
+            r.set(str(message.channel), 1)
+            r.set(str(message.channel)+"garr", pickle.dumps(garray))
+            await message.reply("$game start")
 
 
 def render(garray):
@@ -60,7 +61,7 @@ def render(garray):
                 b += 1
             else:
                 img0.paste(imar[j], Pos[a][b], mask=imar[j])
-                #img0.save("Green grid.png")
+                # img0.save("Green grid.png")
                 # img0.show()
                 b += 1
         a += 1
