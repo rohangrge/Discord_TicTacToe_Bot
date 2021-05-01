@@ -52,7 +52,7 @@ async def on_message(message):
             piece = r.get(str(message.channel.id) +
                           "garr"+"movec").decode('utf=8')
             print(piece)
-            if pos in [0, 1] and piece in ['x', 'o']:
+            if pos in range(1, 9, 1) and piece in ['x', 'o']:
                 if piece == 'x':
                     r.set((str(message.channel.id)+"garr"+"movec"), 'o')
                 if piece == 'o':
@@ -63,8 +63,8 @@ async def on_message(message):
                 # arr.seek(0)
                 await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                 os.remove(str(message.channel.id)+'.png')
-            if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
-                await message.reply('game failure,botDev is checking')
+            '''if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
+                await message.reply('game failure,botDev is checking')'''
 
 
 def render(garray):
