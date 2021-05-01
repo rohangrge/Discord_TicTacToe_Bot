@@ -20,7 +20,7 @@ Pos = [[(0, 0), (w, 0), (2*w, 0)],
        [(0, h), (w, h), (2*w, h)],
        [(0, 2*h), (w, 2*h), (2*w, 2*h)]]
 
-garray = [-1, 0, -1, -1, -1, -1, -1, -1, -1]
+garray = [-1, -1, -1, -1, -1, -1, -1, -1, -1]
 client = discord.Client()
 
 
@@ -74,12 +74,12 @@ async def on_message(message):
                                 await message.reply(discord.File("X final.gif"))
                             if(piece == 'o'):
                                 await message.reply(discord.File("O final.gif"))
-
-                        if check_draw(cgarr) == 1:
-                            flushRedis(str(message.channel.id))
-                            await message.reply("GAME IS A DRAW")
+                        if(cgarr != garray):
+                            if check_draw(cgarr) == 1:
+                                flushRedis(str(message.channel.id))
+                                await message.reply("GAME IS A DRAW")
                         if(check_win(cgarr, piece) == 0 and check_draw(cgarr, piece) == 0):
-                            img = render(garray)
+                            img = render(cgarr)
                             img.save(str(message.channel.id)+'.png')
                             await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                             os.remove(str(message.channel.id)+'.png')
