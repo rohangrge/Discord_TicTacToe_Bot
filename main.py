@@ -8,6 +8,7 @@ import os
 from PIL import Image
 import redis
 import pickle
+import io
 r = redis.Redis()
 img0 = Image.open(r"Green grid.png")
 img1 = Image.open(r"cross white.png")
@@ -48,15 +49,20 @@ async def on_message(message):
             p = imsg.split()
             pos = int(p[1])
             print(pos)
-            piece = p[2]
+            piece = r.get(str(message.channel.id) +
+                          "garr"+"movec").decode('utf=8')
             print(piece)
             if pos in [0, 1] and piece in ['x', 'o']:
-                if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') == piece):
-                    if piece == 'x':
-                        r.set((str(message.channel.id)+"garr"+"movec"), 'o')
-                    await message.reply(file=discord.File(render(garray)))
-                if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
-                    await message.reply()
+                if piece == 'x':
+                    r.set((str(message.channel.id)+"garr"+"movec"), 'o')
+                if piece == 'o':
+                    r.set((str(message.channel.id)+"garr"+"movec"), 'x')
+                arr = io.BytesIO()
+                img = render(garray)
+                img.save(arr, format='PNG')
+                await message.reply(file=discord.File(arr))
+            if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
+                await message.reply('game failure,botDev is checking')
 
 
 def render(garray):
