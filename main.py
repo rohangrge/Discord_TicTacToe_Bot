@@ -69,7 +69,7 @@ async def on_message(message):
                         if piece == 'o':
                             r.set((str(message.channel.id)+"garr"+"movec"), 'x')
                         if check_win(cgarr, piece) == 1:
-                            del flushRedis(str(message.channel.id))
+                            flushRedis(str(message.channel.id))
                             if(piece == 'x'):
                                 await message.reply(discord.File("X final.gif"))
                             if(piece == 'o'):
