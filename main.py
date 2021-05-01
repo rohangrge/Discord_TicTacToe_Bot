@@ -61,7 +61,7 @@ async def on_message(message):
                 img = render(garray)
                 img.save(str(message.channel.id)+'.png')
                 # arr.seek(0)
-                await message.reply(file=discord.File(message.channel.id+'.png'))
+                await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                 os.remove(str(message.channel.id)+'.png')
             if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
                 await message.reply('game failure,botDev is checking')
