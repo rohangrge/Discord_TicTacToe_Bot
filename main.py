@@ -60,7 +60,7 @@ async def on_message(message):
                         r.set((str(message.channel.id)+"garr"+"movec"), 'x')
                     # arr = io.BytesIO()
                     cgarr = pickle.loads(r.get(str(message.channel.id)+"garr"))
-                    if(generate(pos, piece, cgarr) != -1):
+                    if(checksum(pos, cgarr) == 0):
                         cgarr = generate(pos, piece, cgarr)
                         r.set(str(message.channel.id) +
                               "garr", pickle.dumps(cgarr))
