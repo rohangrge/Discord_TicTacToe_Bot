@@ -53,16 +53,17 @@ async def on_message(message):
                           "garr"+"movec").decode('utf=8')
             print(piece)
             if pos in range(1, 9, 1) and piece in ['x', 'o']:
-                if piece == 'x':
-                    r.set((str(message.channel.id)+"garr"+"movec"), 'o')
-                if piece == 'o':
-                    r.set((str(message.channel.id)+"garr"+"movec"), 'x')
-                # arr = io.BytesIO()
-                img = render(garray)
-                img.save(str(message.channel.id)+'.png')
-                # arr.seek(0)
-                await message.reply(file=discord.File(str(message.channel.id)+'.png'))
-                os.remove(str(message.channel.id)+'.png')
+                async with message.channel.typing():
+                    if piece == 'x':
+                        r.set((str(message.channel.id)+"garr"+"movec"), 'o')
+                    if piece == 'o':
+                        r.set((str(message.channel.id)+"garr"+"movec"), 'x')
+                    # arr = io.BytesIO()
+                    img = render(garray)
+                    img.save(str(message.channel.id)+'.png')
+                    # arr.seek(0)
+                    await message.reply(file=discord.File(str(message.channel.id)+'.png'))
+                    os.remove(str(message.channel.id)+'.png')
             '''if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
                 await message.reply('game failure,botDev is checking')'''
 
