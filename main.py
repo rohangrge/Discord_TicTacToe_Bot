@@ -43,7 +43,7 @@ async def on_message(message):
             r.set(str(message.channel)+"garr", pickle.dumps(garray))
             r.set(str(message.channel)+"garr"+"movec", 'x')
             await message.reply("$game start")
-    if((r.get(str(message.channel))).decode('utf-8') == "1"):
+    if((r.get(str(message.channel.id))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
             p = imsg.split()
             pos = int(p[1])
