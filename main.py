@@ -1,6 +1,7 @@
 import discord
 from discord import channel
 from discord import client
+from discord.utils import get
 from dotenv.main import load_dotenv
 from keep_alive import keep_alive
 import os
@@ -40,11 +41,16 @@ async def on_message(message):
         if(imsg.startswith("$tictactoe")):
             r.set(str(message.channel), 1)
             r.set(str(message.channel)+"garr", pickle.dumps(garray))
+            r.set(str(message.channel)+"garr"+"movec", 'x')
             await message.reply("$game start")
     if((r.get(str(message.channel))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
             p = imsg.split()
-            test = 1
+            pos = p[1]
+            piece = p[2]
+            if pos in [0, 1] and piece in ['x', 'o']:
+                if(r.get(str(message.channel)+"garr"+"movec").decode('utf=8') == 'x' and piece == 'o'):
+                    await message.reply(file=discord.File('Green grid.png'))
 
 
 def render(garray):
@@ -73,8 +79,8 @@ def render(garray):
     return(img0)
 
 
-def readRedis():
-    game = pickle.loads(r.get('garray'))
+def readRedis(msgChan):
+    game = pickle.loads(r.get(msgChan+'garray'))
     return game
 
 
