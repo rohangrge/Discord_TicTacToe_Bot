@@ -49,7 +49,7 @@ async def on_message(message):
             pos = p[1]
             piece = p[2]
             if pos in [0, 1] and piece in ['x', 'o']:
-                if(r.get(str(message.channel)+"garr"+"movec").decode('utf=8') == 'x' and piece == 'o'):
+                if(r.get(str(message.channel)+"garr"+"movec").decode('utf=8') == 'x' and piece == 'x'):
                     await message.reply(file=discord.File('Green grid.png'))
 
 
