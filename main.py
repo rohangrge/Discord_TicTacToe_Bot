@@ -54,7 +54,7 @@ async def on_message(message):
                 if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') == piece):
                     if piece == 'x':
                         r.set((str(message.channel.id)+"garr"+"movec"), 'o')
-                    await message.reply(file=discord.File('Green grid.png'))
+                    await message.reply(file=discord.File(render(garray)))
                 if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
                     await message.reply()
 
