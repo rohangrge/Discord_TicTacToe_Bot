@@ -40,8 +40,8 @@ async def on_message(message):
                 await message.channel.send("$startgame to tictactoe")
         if(imsg.startswith("$tictactoe")):
             r.set(str(message.channel.id), 1)
-            r.set(str(message.channel)+"garr", pickle.dumps(garray))
-            r.set(str(message.channel)+"garr"+"movec", 'x')
+            r.set(str(message.channel.id)+"garr", pickle.dumps(garray))
+            r.set(str(message.channel.id)+"garr"+"movec", 'x')
             await message.reply("$game start")
     if((r.get(str(message.channel.id))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
@@ -51,7 +51,9 @@ async def on_message(message):
             piece = p[2]
             print(piece)
             if pos in [0, 1] and piece in ['x', 'o']:
-                if(r.get(str(message.channel)+"garr"+"movec").decode('utf=8') == 'x' and piece == 'x'):
+                if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') == piece):
+                    if piece == 'x':
+                        r.set(r.get(str(message.channel.id)+"garr"+"movec"), 'o')
                     await message.reply(file=discord.File('Green grid.png'))
 
 
