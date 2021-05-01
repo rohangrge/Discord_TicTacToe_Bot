@@ -47,7 +47,9 @@ async def on_message(message):
         if(imsg.startswith("$move")):
             p = imsg.split()
             pos = int(p[1])
+            print(pos)
             piece = p[2]
+            print(piece)
             if pos in [0, 1] and piece in ['x', 'o']:
                 if(r.get(str(message.channel)+"garr"+"movec").decode('utf=8') == 'x' and piece == 'x'):
                     await message.reply(file=discord.File('Green grid.png'))
