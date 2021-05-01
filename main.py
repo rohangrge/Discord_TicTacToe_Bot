@@ -46,7 +46,7 @@ async def on_message(message):
     if((r.get(str(message.channel))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
             p = imsg.split()
-            pos = p[1]
+            pos = int(p[1])
             piece = p[2]
             if pos in [0, 1] and piece in ['x', 'o']:
                 if(r.get(str(message.channel)+"garr"+"movec").decode('utf=8') == 'x' and piece == 'x'):
