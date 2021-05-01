@@ -39,7 +39,7 @@ async def on_message(message):
             async with message.channel.typing():
                 await message.channel.send("$startgame to tictactoe")
         if(imsg.startswith("$tictactoe")):
-            r.set(str(message.channel), 1)
+            r.set(str(message.channel.id), 1)
             r.set(str(message.channel)+"garr", pickle.dumps(garray))
             r.set(str(message.channel)+"garr"+"movec", 'x')
             await message.reply("$game start")
