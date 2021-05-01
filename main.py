@@ -20,7 +20,7 @@ Pos = [[(0, 0), (w, 0), (2*w, 0)],
        [(0, h), (w, h), (2*w, h)],
        [(0, 2*h), (w, 2*h), (2*w, 2*h)]]
 
-garray = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
+garray = [-1, 0, -1, -1, -1, -1, -1, -1, -1]
 client = discord.Client()
 
 
@@ -59,6 +59,7 @@ async def on_message(message):
                     if piece == 'o':
                         r.set((str(message.channel.id)+"garr"+"movec"), 'x')
                     # arr = io.BytesIO()
+
                     img = render(garray)
                     img.save(str(message.channel.id)+'.png')
                     # arr.seek(0)
@@ -68,10 +69,29 @@ async def on_message(message):
                 await message.reply('game failure,botDev is checking')'''
 
 
-def render(garray):
+def render(garray1):
     img0 = Image.open(r"Green grid.png")
     img1 = Image.open(r"cross white.png")
     img2 = Image.open(r"circle white.png")
+    imar = [img1, img2]
+    w = 131
+    h = 129
+    index = 0
+    Pos = [(0, 0), (w, 0), (2*w, 0), (0, h), (w, h),
+           (2*w, h), (0, 2*h), (w, 2*h), (2*w, 2*h)]
+    for i in garray1:
+        if (i != -1):
+            img0.paste(imar[i], Pos[index], mask=imar[i])
+        index += 1
+    # img0.show()
+    return img0
+
+
+'''def render(garray):
+    img0 = Image.open(r"Green grid.png")
+    img1 = Image.open(r"cross white.png")
+    img2 = Image.open(r"circle white.png")
+    Pos=[(0,0),(w,0),(2*w,0),(0,h),(w,h),(2*w,h),(0,2*h),(w,2*h),(2*w,2*h)]
     imar = [img1, img2]
     w = 131
     h = 129
@@ -91,7 +111,7 @@ def render(garray):
                 b += 1
         a += 1
     # img0.show()
-    return(img0)
+    return(img0)'''
 
 
 def readRedis(msgChan):
