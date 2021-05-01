@@ -9,7 +9,7 @@ from PIL import Image
 import redis
 import pickle
 import io
-r = redis.Redis()
+r = redis.Redis("192.168.0.133")
 img0 = Image.open(r"Green grid.png")
 img1 = Image.open(r"cross white.png")
 img2 = Image.open(r"circle white.png")
@@ -60,8 +60,10 @@ async def on_message(message):
                         r.set((str(message.channel.id)+"garr"+"movec"), 'x')
                     # arr = io.BytesIO()
                     cgarr = pickle.loads(r.get(str(message.channel.id)+"garr"))
+                    print(cgarr)
                     if(checksum(pos, cgarr) == 0):
                         cgarr = generate(pos, piece, cgarr)
+                        print(cgarr)
                         r.set(str(message.channel.id) +
                               "garr", pickle.dumps(cgarr))
                         if piece == 'x':
@@ -71,14 +73,14 @@ async def on_message(message):
                         if check_win(cgarr, piece) == 1:
                             flushRedis(str(message.channel.id))
                             if(piece == 'x'):
-                                await message.reply(discord.File("X final.gif"))
+                                await message.reply(file=discord.File("X final.gif"))
                             if(piece == 'o'):
-                                await message.reply(discord.File("O final.gif"))
+                                await message.reply(file=discord.File("O final.gif"))
                         if(cgarr != garray):
                             if check_draw(cgarr) == 1:
                                 flushRedis(str(message.channel.id))
                                 await message.reply("GAME IS A DRAW")
-                        if(check_win(cgarr, piece) == 0 and check_draw(cgarr) == 0 and checksum(pos, cgarr) == 0):
+                        if(check_win(cgarr, piece) == 0 and check_draw(cgarr) == 0):
                             img = render(cgarr)
                             img.save(str(message.channel.id)+'.png')
                             await message.reply(file=discord.File(str(message.channel.id)+'.png'))
@@ -112,7 +114,7 @@ def check_win(cgarr, piece):
 
 
 def check_draw(garr):
-    if(garr.count(0)+garr.count(1)):
+    if(garr.count(0)+garr.count(1) == 9):
         return 1
     else:
         return 0
@@ -123,9 +125,9 @@ def generate(pos, piece, garray):
         return(garray)
     else:
         if(piece == 'x'):
-            garray[pos-1] == 0
+            garray[pos-1] = 0
         if(piece == 'o'):
-            garray[pos-1] == 1
+            garray[pos-1] = 1
         return(garray)
 
 
