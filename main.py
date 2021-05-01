@@ -57,11 +57,12 @@ async def on_message(message):
                     r.set((str(message.channel.id)+"garr"+"movec"), 'o')
                 if piece == 'o':
                     r.set((str(message.channel.id)+"garr"+"movec"), 'x')
-                arr = io.BytesIO()
+                # arr = io.BytesIO()
                 img = render(garray)
-                img.save(arr, format='PNG')
-                arr.seek(0)
-                await message.reply(file=discord.File(arr))
+                img.save(message.channel.id+'.png')
+                # arr.seek(0)
+                await message.reply(file=discord.File(message.channel.id+'.png'))
+                os.remove(message.channel.id+'.png')
             if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
                 await message.reply('game failure,botDev is checking')
 
