@@ -43,7 +43,8 @@ async def on_message(message):
             r.set(str(message.channel.id), 1)
             r.set(str(message.channel.id)+"garr", pickle.dumps(garray))
             r.set(str(message.channel.id)+"garr"+"movec", 'x')
-            await message.reply("$game start")
+            await message.reply(file=discord.File('Green grid.png'))
+            await message.reply("Started game with player as x")
     if((r.get(str(message.channel.id))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
             p = imsg.split()
@@ -52,7 +53,7 @@ async def on_message(message):
             piece = r.get(str(message.channel.id) +
                           "garr"+"movec").decode('utf=8')
             print(piece)
-            if pos in range(1, 9, 1) and piece in ['x', 'o']:
+            if pos in range(1, 10, 1) and piece in ['x', 'o']:
                 async with message.channel.typing():
                     if piece == 'x':
                         r.set((str(message.channel.id)+"garr"+"movec"), 'o')
@@ -73,9 +74,17 @@ async def on_message(message):
                         if check_win(cgarr, piece) == 1:
                             flushRedis(str(message.channel.id))
                             if(piece == 'x'):
+                                img = render(cgarr)
+                                img.save(str(message.channel.id)+'.png')
+                                await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                                 await message.reply(file=discord.File("X final.gif"))
+                                os.remove(str(message.channel.id)+'.png')
                             if(piece == 'o'):
+                                img = render(cgarr)
+                                img.save(str(message.channel.id)+'.png')
+                                await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                                 await message.reply(file=discord.File("O final.gif"))
+                                os.remove(str(message.channel.id)+'.png')
                         if(cgarr != garray):
                             if check_draw(cgarr) == 1:
                                 flushRedis(str(message.channel.id))
@@ -85,7 +94,11 @@ async def on_message(message):
                             img.save(str(message.channel.id)+'.png')
                             await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                             os.remove(str(message.channel.id)+'.png')
-                    if(generate(pos, piece, cgarr) == -1):
+                    else:
+                        if piece == 'x':
+                            r.set((str(message.channel.id)+"garr"+"movec"), 'x')
+                        if piece == 'o':
+                            r.set((str(message.channel.id)+"garr"+"movec"), 'o')
                         await message.reply("occupied position,enter an empty position")
 
             '''if(r.get(str(message.channel.id)+"garr"+"movec").decode('utf=8') != piece):
