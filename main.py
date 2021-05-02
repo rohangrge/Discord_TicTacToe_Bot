@@ -36,9 +36,13 @@ async def on_message(message):
 
     imsg = message.content
     if((r.get(str(message.channel))) is None):
-        if(imsg.startswith("$tichelp")):
+        if(imsg.startswith("$help")):
             async with message.channel.typing():
-                await message.channel.send("$startgame to tictactoe")
+                await message.channel.send('''$tictactoe - To start a new game
+$move <1-9> - To play your piece to a position
+This bot enables free play on a channel by any users on the channel. The moves are interpreted alternatively for X and O pieces respectively. The bot devs are currently working on user-user play on a particular channel.
+The bot also allows for multiple games to be played on different channels of a server.
+Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord_TicTacToe_Bot''')
         if(imsg.startswith("$tictactoe")):
             r.set(str(message.channel.id), 1)
             r.set(str(message.channel.id)+"garr", pickle.dumps(garray))
