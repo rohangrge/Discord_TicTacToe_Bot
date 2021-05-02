@@ -90,7 +90,7 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
                                 await message.reply(file=discord.File("O final.gif"))
                                 os.remove(str(message.channel.id)+'.png')
                         if(cgarr != garray):
-                            if check_draw(cgarr) == 1:
+                            if check_draw(cgarr) == 1 and check_win(cgarr, piece) == 0:
                                 flushRedis(str(message.channel.id))
                                 img = render(cgarr)
                                 img.save(str(message.channel.id)+'.png')
