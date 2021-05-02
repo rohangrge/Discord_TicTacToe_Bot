@@ -88,7 +88,10 @@ async def on_message(message):
                         if(cgarr != garray):
                             if check_draw(cgarr) == 1:
                                 flushRedis(str(message.channel.id))
-                                await message.reply("GAME IS A DRAW")
+                                img = render(cgarr)
+                                img.save(str(message.channel.id)+'.png')
+                                await message.reply(file=discord.File(str(message.channel.id)+'.png'))
+                                await message.reply(file=discord.File('draw.gif'))
                         if(check_win(cgarr, piece) == 0 and check_draw(cgarr) == 0):
                             img = render(cgarr)
                             img.save(str(message.channel.id)+'.png')
