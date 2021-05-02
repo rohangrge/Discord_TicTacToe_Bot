@@ -96,6 +96,7 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
                                 img.save(str(message.channel.id)+'.png')
                                 await message.reply(file=discord.File(str(message.channel.id)+'.png'))
                                 await message.reply(file=discord.File('draw.gif'))
+                                os.remove(str(message.channel.id)+'.png')
                         if(check_win(cgarr, piece) == 0 and check_draw(cgarr) == 0):
                             img = render(cgarr)
                             img.save(str(message.channel.id)+'.png')
