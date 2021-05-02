@@ -9,7 +9,7 @@ from PIL import Image
 import redis
 import pickle
 import io
-r = redis.Redis("192.168.0.133")
+r = redis.Redis()
 img0 = Image.open(r"Green grid.png")
 img1 = Image.open(r"cross white.png")
 img2 = Image.open(r"circle white.png")
