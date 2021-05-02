@@ -36,7 +36,7 @@ async def on_message(message):
 
     imsg = message.content
     if((r.get(str(message.channel))) is None):
-        if(imsg.startswith("$help")):
+        if(imsg.startswith("$thelp")):
             async with message.channel.typing():
                 await message.channel.send('''$tictactoe - To start a new game
 $move <1-9> - To play your piece to a position
