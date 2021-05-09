@@ -56,7 +56,7 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
             print(pos)
             piece = r.get(str(message.channel.id) +
                           "garr"+"movec").decode('utf=8')
-            print(piece)
+            # print(piece)
             if pos in range(1, 10, 1) and piece in ['x', 'o']:
                 async with message.channel.typing():
                     if piece == 'x':
@@ -65,10 +65,10 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
                         r.set((str(message.channel.id)+"garr"+"movec"), 'x')
                     # arr = io.BytesIO()
                     cgarr = pickle.loads(r.get(str(message.channel.id)+"garr"))
-                    print(cgarr)
+                    # print(cgarr)
                     if(checksum(pos, cgarr) == 0):
                         cgarr = generate(pos, piece, cgarr)
-                        print(cgarr)
+                        # print(cgarr)
                         r.set(str(message.channel.id) +
                               "garr", pickle.dumps(cgarr))
                         if piece == 'x':
