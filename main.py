@@ -44,11 +44,19 @@ This bot enables free play on a channel by any users on the channel. The moves a
 The bot also allows for multiple games to be played on different channels of a server.
 Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord_TicTacToe_Bot''')
         if(imsg.startswith("$tictactoe")):
+            mentions = message.mentions
+            # print(mentions[0])
             r.set(str(message.channel.id), 1)
             r.set(str(message.channel.id)+"garr", pickle.dumps(garray))
             r.set(str(message.channel.id)+"garr"+"movec", 'x')
+            if(len(mentions) != 0):
+                r.set(str(message.channel.id)+'p1', message.author.id)
+                r.set(str(message.channel.id)+'p2', mentions[0].id)
             await message.reply(file=discord.File('Green grid.png'))
-            await message.reply("Started game with player as x")
+            await message.reply("Started game with <@!"+str(message.author.id) + ">as x")
+            if(len(mentions) != 0):
+                await message.reply("Started game with <@!"+str(mentions[0].id) + ">as o")
+            return
     if((r.get(str(message.channel.id))).decode('utf-8') == "1"):
         if(imsg.startswith("$move")):
             p = imsg.split()
@@ -59,10 +67,16 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
             # print(piece)
             if pos in range(1, 10, 1) and piece in ['x', 'o']:
                 async with message.channel.typing():
-                    if piece == 'x':
+                    if piece == 'x' and message.author.id == int(r.get(str(message.channel.id)+'p1').decode('utf-8')):
                         r.set((str(message.channel.id)+"garr"+"movec"), 'o')
-                    if piece == 'o':
+                    if piece == 'o' and message.author.id == int(r.get(str(message.channel.id)+'p2').decode('utf-8')):
                         r.set((str(message.channel.id)+"garr"+"movec"), 'x')
+                    if piece == 'x' and message.author.id != int(r.get(str(message.channel.id)+'p1').decode('utf-8')):
+                        await message.reply('sorry not your turn')
+                        return
+                    if piece == 'o' and message.author.id != int(r.get(str(message.channel.id)+'p2').decode('utf-8')):
+                        await message.reply('sorry not your turn')
+                        return
                     # arr = io.BytesIO()
                     cgarr = pickle.loads(r.get(str(message.channel.id)+"garr"))
                     # print(cgarr)
@@ -219,7 +233,7 @@ def flushRedis(key):
     r.delete(key+"garr"+"movec")
 
 
-keep_alive()
+# keep_alive()
 load_dotenv()
 my_secret = os.getenv('mtoken')
 # print(my_secret)
