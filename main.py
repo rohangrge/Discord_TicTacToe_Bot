@@ -105,7 +105,8 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
                                 os.remove(str(message.channel.id)+'.png')
                         if(cgarr != garray):
                             if check_draw(cgarr) == 1 and check_win(cgarr, piece) == 0:
-                                flushRedis(str(message.channel.id))
+                                flushRedis(str(message.channel.id), str(r.get(str(message.channel.id)+'p2').decode(
+                                    'utf-8')), str(r.get(str(message.channel.id)+'p1').decode('utf-8')))
                                 img = render(cgarr)
                                 img.save(str(message.channel.id)+'.png')
                                 await message.reply(file=discord.File(str(message.channel.id)+'.png'))
@@ -227,10 +228,12 @@ def writeRedis(gArr):
     r.set(garray, pickle.dumps(gArr))
 
 
-def flushRedis(key):
+def flushRedis(key, temp1, temp2):
     r.delete(key)
     r.delete(key+"garr")
     r.delete(key+"garr"+"movec")
+    r.delete(key+temp1)
+    r.delete(key+temp2)
 
 
 # keep_alive()
