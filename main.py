@@ -90,7 +90,8 @@ Bot suggestions/improvements can be done on https://github.com/rohangrge/Discord
                         if piece == 'o':
                             r.set((str(message.channel.id)+"garr"+"movec"), 'x')
                         if check_win(cgarr, piece) == 1:
-                            flushRedis(str(message.channel.id))
+                            flushRedis(str(message.channel.id), str(r.get(str(message.channel.id)+'p2').decode(
+                                'utf-8')), str(r.get(str(message.channel.id)+'p1').decode('utf-8')))
                             if(piece == 'x'):
                                 img = render(cgarr)
                                 img.save(str(message.channel.id)+'.png')
